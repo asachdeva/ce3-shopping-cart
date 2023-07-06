@@ -1,0 +1,3 @@
+[0m[[0m[0minfo[0m] [0m[0m/home/asachdeva/work/shopping-cart-test-main/src/test/scala/com/example/cart/modules/ShoppingCartServiceSpec.scala:9:15: Unused import[0m
+[0m[[0m[0minfo[0m] [0m[0mimport munit.{CatsEffectFunFixtures, CatsEffectSuite}[0m
+[0m[[0m[0minfo[0m] [0m[0m              ^[0m

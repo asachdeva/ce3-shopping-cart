@@ -1,0 +1,12 @@
+[0m[[0m[31merror[0m] [0m[0m/home/asachdeva/work/shopping-cart-test-main/src/main/scala/com/example/cart/services/ShoppingCartService.scala:27:39: overloaded method * with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Double)Double <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Float)Float <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Long)Long <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Int)Int <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Char)Int <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Short)Int <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Byte)Int[0m
+[0m[[0m[31merror[0m] [0m[0m cannot be applied to (com.example.cart.domain.product.Price)[0m
+[0m[[0m[31merror[0m] [0m[0m        total + (items.quantity.value * items.product.price)[0m
+[0m[[0m[31merror[0m] [0m[0m                                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
