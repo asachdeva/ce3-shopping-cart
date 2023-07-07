@@ -1,16 +1,16 @@
 package com.example.cart.services
 
-import cats.effect.IO
-import cats.implicits.toTraverseOps
+import cats.effect._
+import cats.implicits._
 import com.example.cart.domain.cart.CartItem
-import com.example.cart.modules.InMemoryShoppingCart.{TaxRate, TotalPayableRate}
-import com.example.cart.modules.{ShoppingCartResolver, _}
+import com.example.cart.modules.InMemoryShoppingCart.{TaxRate, TotalRate}
+import com.example.cart.modules._
 
 class ShoppingCartService(
     shoppingCartResolver: ShoppingCartResolver,
     productResolver: ProductResolver
 ) {
-  val BigDecimalZero = BigDecimal(0.0)
+  val BigDecimalZero: BigDecimal = BigDecimal(0.0)
 
   def add(item: CartItem): IO[Unit] = for {
     product <- productResolver.retrieveProduct(item.product.name.value)
@@ -29,6 +29,5 @@ class ShoppingCartService(
     )
 
   def taxPayable: IO[BigDecimal] = subtotal.map(_ * TaxRate)
-  def totalPayable: IO[BigDecimal] = subtotal.map(_ * TotalPayableRate)
-
+  def totalPayable: IO[BigDecimal] = subtotal.map(_ * TotalRate)
 }

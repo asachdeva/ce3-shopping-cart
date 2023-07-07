@@ -1,12 +1,11 @@
 package com.example.cart
 
-import cats.{Eq, Show}
-import com.example.cart.domain.cart.Quantity
+import cats._
+import com.example.cart.domain.cart._
 import com.example.cart.domain.product._
 
 package object domain extends OrphanInstances
 
-// instances for types we don't control
 trait OrphanInstances {
   implicit val nameShow: Show[Name] = Show.fromToString
   implicit val priceShow: Show[Price] = Show.fromToString

@@ -10,7 +10,7 @@ import io.estatico.newtype.macros.newtype
 object cart {
   @derive(decoder, encoder, eqv, show)
   @newtype
-  case class Quantity(value: Int)
+  case class Quantity(value: Long)
 
   @derive(eqv, show)
   @newtype
@@ -25,13 +25,6 @@ object cart {
   }
 
   @derive(decoder, encoder, eqv, show)
-  case class CartItem(product: Product, quantity: Quantity) {
-    def subTotal: Double = product.price.amount * quantity.value
-  }
-
-  @derive(decoder, encoder, eqv, show)
-  case class CartTotal(items: List[CartItem], total: Double) {
-    def salesTax: Double = 0.125 * items.map(_.subTotal).sum
-  }
+  case class CartItem(product: Product, quantity: Quantity)
 
 }

@@ -19,14 +19,14 @@ object ProductResolverMock {
   val cheerios = Product(Name("cheerios"), Price(1.2))
   val cornflakes = Product(Name("cornflakes"), Price(1.3))
   val frosties = Product(Name("frosties"), Price(1.8))
-  val shreddies = Product(Name("shreddies"), Price(2.2))
-  val weetabix = Product(Name("weetabix"), Price(1.0))
+  val foo = Product(Name("foo"), Price(2.2))
+  val bar = Product(Name("bar"), Price(1.0))
 
   val service = HttpRoutes.of[IO] {
     case GET -> Root / "cheerios.json"   => Ok(cheerios.asJson)
     case GET -> Root / "cornflakes.json" => Ok(cornflakes.asJson)
-    case GET -> Root / "shreddies.json"  => Ok(shreddies.asJson)
-    case GET -> Root / "weetabix.json"   => Ok(weetabix.asJson)
+    case GET -> Root / "foo.json"        => Ok(foo.asJson)
+    case GET -> Root / "bar.json"        => Ok(bar.asJson)
     case GET -> Root / "frosties.json"   => Ok(frosties.asJson)
   }
 

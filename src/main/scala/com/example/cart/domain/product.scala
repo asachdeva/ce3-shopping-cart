@@ -44,22 +44,4 @@ object product {
         Price(price.amount)
       )
   }
-
-  // ----- Update product ------
-
-  @derive(decoder, encoder)
-  case class UpdateProductParam(
-      price: PriceParam
-  ) {
-    def toDomain: UpdateProduct =
-      UpdateProduct(
-        Price(price.amount)
-      )
-  }
-
-  @derive(decoder, encoder)
-  case class UpdateProduct(
-      price: Price
-  )
-
 }

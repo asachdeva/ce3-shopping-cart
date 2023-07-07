@@ -4,22 +4,22 @@ object Dependencies {
 
   object Versions {
     val cats = "2.7.0"
-    val catsEffect = "3.3.12"
+    val catsEffect = "3.5.1"
     val catsRetry = "3.1.0"
-    val circe = "0.14.2"
+    val circe = "0.14.5"
     val derevo = "0.13.0"
 
-    val http4s = "0.23.1"
+    val http4s = "0.23.22"
     val log4cats = "2.3.1"
-    val monocle = "3.1.0"
+    val monocle = "3.2.0"
     val newtype = "0.4.4"
-    val refined = "0.9.29"
+    val refined = "0.11.0"
 
     val betterMonadicFor = "0.3.1"
     val kindProjector = "0.13.2"
     val logback = "1.2.11"
     val organizeImports = "0.6.0"
-    val semanticDB = "4.5.8"
+    val semanticDB = "4.8.2"
 
     val munit = "1.0.7"
   }

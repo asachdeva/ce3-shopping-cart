@@ -2,14 +2,24 @@ import Dependencies.*
 import sbt.*
 
 ThisBuild / organization := "com.example"
-ThisBuild / scalaVersion := "2.13.5"
+ThisBuild / scalaVersion := "2.13.11"
 
+// ScalaFix
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := "4.8.2"
 ThisBuild / evictionErrorLevel := Level.Warn
 ThisBuild / scalafixDependencies += Libraries.organizeImports
 
 resolvers ++= Resolver.sonatypeOssRepos("snapshots")
-val scalafixCommonSettings =
-  inConfig(IntegrationTest)(scalafixConfigSettings(IntegrationTest))
+
+// Reload Sbt on changes to sbt or dependencies
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
+lazy val testSettings: Seq[Def.Setting[_]] = List(
+  Test / parallelExecution := false,
+  publish / skip := true,
+  fork := true
+)
 
 lazy val root = (project in file("."))
   .settings(

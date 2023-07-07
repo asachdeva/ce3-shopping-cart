@@ -3,7 +3,7 @@ package com.example.cart.modules
 import cats.effect._
 import com.example.cart.domain.cart.{CartItem, Quantity}
 import com.example.cart.domain.product._
-import com.example.cart.modules.InMemoryShoppingCart.TaxRate
+import com.example.cart.modules.InMemoryShoppingCart.{TaxRate, TotalRate}
 import com.example.cart.services.ShoppingCartService
 import munit._
 import org.http4s.server.Server
@@ -55,8 +55,8 @@ class ShoppingCartServiceSpec extends CatsEffectSuite {
       CartItem(cheerios, Quantity(10)),
       CartItem(cornflakes, Quantity(15)),
       CartItem(frosties, Quantity(7)),
-      CartItem(shreddies, Quantity(1)),
-      CartItem(weetabix, Quantity(10))
+      CartItem(foo, Quantity(1)),
+      CartItem(bar, Quantity(10))
     )
     for {
       cart <- shoppingCartService
@@ -111,9 +111,18 @@ class ShoppingCartServiceSpec extends CatsEffectSuite {
       cart <- shoppingCartService
       _ <- cart.add(
         List(
-          Product(cheerios.name, cheerios.price).cart(Quantity(20)),
-          Product(shreddies.name, shreddies.price).cart(Quantity(10)),
-          Product(weetabix.name, weetabix.price).cart(Quantity(5))
+          CreateProductParam(
+            NameParam(cheerios.name.value),
+            PriceParam(cheerios.price.amount)
+          ).toDomain.cart(Quantity(20)),
+          CreateProductParam(
+            NameParam(foo.name.value),
+            PriceParam(foo.price.amount)
+          ).toDomain.cart(Quantity(10)),
+          CreateProductParam(
+            NameParam(bar.name.value),
+            PriceParam(bar.price.amount)
+          ).toDomain.cart(Quantity(5))
         )
       )
       subtotal <- cart.subtotal
@@ -155,7 +164,7 @@ class ShoppingCartServiceSpec extends CatsEffectSuite {
       _ <- cart.add(
         List(
           Product(cheerios.name, cheerios.price).cart(Quantity(10)),
-          Product(weetabix.name, weetabix.price).cart(Quantity(10)),
+          Product(bar.name, bar.price).cart(Quantity(10)),
           Product(frosties.name, frosties.price).cart(Quantity(5))
         )
       )
@@ -169,6 +178,51 @@ class ShoppingCartServiceSpec extends CatsEffectSuite {
       result <- cart.taxPayable
     } yield assertEquals(result, BigDecimal(0.0))
 
+  }
+
+  // Calculate total payable
+  test("can calculate the cart total payable for a single product") {
+    for {
+      cart <- shoppingCartService
+      _ <- cart.add(
+        List(Product(cheerios.name, cheerios.price).cart(Quantity(1)))
+      )
+      tax <- cart.totalPayable
+    } yield assertEquals(tax, TotalRate * 1.2)
+  }
+
+  test("can calculate the cart total payable for a list of the same product") {
+    for {
+      cart <- shoppingCartService
+      _ <- cart.add(
+        List(Product(cheerios.name, cheerios.price).cart(Quantity(10)))
+      )
+      tax <- cart.totalPayable
+    } yield assertEquals(tax, TotalRate * 12)
+  }
+
+  test(
+    "can calculate the cart total payable for a list of different products"
+  ) {
+    for {
+      cart <- shoppingCartService
+      _ <- cart.add(
+        List(
+          Product(cheerios.name, cheerios.price).cart(Quantity(10)),
+          Product(bar.name, bar.price).cart(Quantity(10)),
+          Product(frosties.name, frosties.price).cart(Quantity(5))
+        )
+      )
+      tax <- cart.totalPayable
+    } yield assertEquals(tax, TotalRate * (1.2 * 10 + 10 + 1.8 * 5))
+  }
+
+  test("can calculate the cart total payable for an empty cart") {
+    for {
+      cart <- shoppingCartService
+      _ <- cart.add(List.empty[CartItem])
+      tax <- cart.totalPayable
+    } yield assertEquals(tax, BigDecimal(0.0))
   }
 
 }
