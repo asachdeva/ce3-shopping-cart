@@ -1,5 +1,7 @@
 import Dependencies.*
 import sbt.*
+import com.scalapenos.sbt.prompt.SbtPrompt.autoImport.*
+import com.scalapenos.sbt.prompt.*
 
 ThisBuild / organization := "com.example"
 ThisBuild / scalaVersion := "2.13.11"
@@ -21,10 +23,29 @@ lazy val testSettings: Seq[Def.Setting[_]] = List(
   fork := true
 )
 
+// Jib container
+val jibEnv = settingKey[String]("env for docker images")
+val jibSettings = List(
+  jibBaseImage := "openjdk:17.0.2",
+  jibBaseImageCredentialHelper := Some("docker-credential-gcloud"),
+  jibTargetImageCredentialHelper := Some("docker-credential-gcloud"),
+  jibRegistry := "gcr.io",
+  jibName := s"${name.value}-${(Global / jibEnv).value}",
+  jibOrganization := (Global / jibOrganization).value,
+  jibVersion := (Global / version).value,
+  jibJvmFlags ++= List(
+    "-XX:+UseZGC"
+  )
+)
+
+promptTheme := PromptTheme(
+  List(
+    text(_ => "[sirius]", fg(64)).padRight(" λ ")
+  )
+)
+
 lazy val root = (project in file("."))
   .settings(
-    Defaults.itSettings,
-    IntegrationTest / parallelExecution := false,
     testFrameworks += new TestFramework("munit.Framework"),
     libraryDependencies += "org.typelevel" %% "munit-cats-effect-3" % Versions.munit % "it,test"
   )
