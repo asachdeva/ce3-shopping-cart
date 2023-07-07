@@ -5,7 +5,7 @@ import com.example.cart.domain.cart.{CartItem, Quantity}
 import com.example.cart.domain.product._
 import com.example.cart.modules.InMemoryShoppingCart.{TaxRate, TotalRate}
 import com.example.cart.services.ShoppingCartService
-import munit._
+import munit.CatsEffectSuite
 import org.http4s.server.Server
 
 import ProductResolverMock._
@@ -25,7 +25,7 @@ class ShoppingCartServiceSpec extends CatsEffectSuite {
   )
 
   val myFixture: Fixture[Server] = ResourceSuiteLocalFixture(
-    "my-server",
+    "my-test-server",
     ProductResolverMock.server
   )
 

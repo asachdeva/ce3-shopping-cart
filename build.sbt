@@ -47,7 +47,7 @@ promptTheme := PromptTheme(
 lazy val root = (project in file("."))
   .settings(
     testFrameworks += new TestFramework("munit.Framework"),
-    libraryDependencies += "org.typelevel" %% "munit-cats-effect-3" % Versions.munit % "it,test"
+    libraryDependencies += "org.typelevel" %% "munit-cats-effect-3" % Versions.munit % "test"
   )
   .settings(
     name := "cats-effect-3-quick-start",
