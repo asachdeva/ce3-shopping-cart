@@ -1,3 +1,6 @@
+[![Actions Status](https://github.com/asachdeva/ce3-shopping-cart/workflows/Build/badge.svg)](https://github.com/asachdeva/ce3-shopping-cart/actions)
+<a href="https://typelevel.org/cats/"><img src="https://typelevel.org/cats/img/cats-badge.svg" height="40px" align="right" alt="Cats friendly" /></a>
+
 ## Instructions for the assignment
 1. Clone this repository on your machine.
 2. Use your IDE of choice to complete the assignment.
